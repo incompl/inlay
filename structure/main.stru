@@ -1,0 +1,13 @@
+- header
+
+  | left
+
+    @ title.md
+
+  | right
+
+    @ menu.md
+
+    - thing
+
+      | thang
