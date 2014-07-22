@@ -1,13 +1,34 @@
 - header
 
   | left
-
+    # grow 3
     @ title.md
 
   | right
-
+    # basis 100px
     @ menu.md
 
-    - thing
+-
+  # justify-content center
 
-      | thang
+  |
+    # grow 0
+    # basis 500px
+    @ content.md
+
+- blocks
+
+  | block
+    - nested-row
+      # direction column
+      |
+        @ block.md
+      |
+        @ block.md
+
+
+  | block
+    @ block.md
+
+  | block
+    @ block.md

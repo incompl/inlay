@@ -8,16 +8,26 @@ module.exports = function(grunt) {
         src: 'structure',
         dest: 'dest'
       }
-    }
+    },
+
+    concat_css: {
+      options: {},
+      all: {
+        src: [
+          'artifacts/css/normalize.css',
+          'artifacts/css/stru.css',
+          'artifacts/css/main.css'
+        ],
+        dest: 'dest/style.css'
+      },
+    },
 
   });
 
-  grunt.loadTasks('tasks');
+  grunt.loadTasks('tasks/stru');
 
-  // Load the plugin that provides the "uglify" task.
-  // grunt.loadNpmTasks('stru');
+  grunt.loadNpmTasks('grunt-concat-css');
 
-  // Default task(s).
-  grunt.registerTask('default', ['stru']);
+  grunt.registerTask('default', ['stru', 'concat_css']);
 
 };
