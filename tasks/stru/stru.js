@@ -78,7 +78,7 @@ module.exports = function(grunt) {
         if (line.match(/^\w*$/)) {
           return;
         }
-        var lineInfo = line.match(/^(\s*)([-|@#])(.*)$/);
+        var lineInfo = line.match(/^(\s*)([-|@#!])(.*)$/);
         if (lineInfo === null) {
           error('Syntax error', lineNum, line);
         }
@@ -104,6 +104,18 @@ module.exports = function(grunt) {
                 function(match, p1) {
               return 'style="' + p1 +
                      paramStyle(lineOptions, lineNum, line) + '"';
+            });
+          }
+          else if (lineCommand === '!') {
+            var unique = 'bp' + Math.round(Math.random() * 1000000);
+            htmlQueue = htmlQueue.replace(/<div/,
+                function(match, p1) {
+              return '<style>@media(max-width:' + lineOptions + ')' +
+                     '{.' + unique + ' {display: block;}}</style><div';
+            });
+            htmlQueue = htmlQueue.replace(/class="([^"]*)"/,
+                function(match, p1) {
+              return 'class="' + p1 + ' ' + unique + '"';
             });
           }
           else {

@@ -5,3 +5,15 @@ body
   background black
   color white
   padding 1em
+
+.headline
+  background #ddd
+
+.right
+  p
+    margin 0
+    a
+      color white
+
+.block
+  padding 0 1em

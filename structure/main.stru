@@ -1,34 +1,53 @@
 - header
 
   | left
-    # grow 3
+    # grow 1
     @ title.md
 
   | right
     # basis 100px
+    # text-align right
     @ menu.md
 
--
+- headline
   # justify-content center
 
-  |
-    # grow 0
+  | block
     # basis 500px
     @ content.md
 
-- blocks
+- content
+  ! 550px
+  # max-width 1100px
+  # margin auto
 
   | block
-    - nested-row
-      # direction column
-      |
+    # basis 150px
+    @ sidebar.md
+
+  |
+    # grow 1
+
+    - blocks
+      ! 650px
+
+      | block
         @ block.md
-      |
+
+      | block
         @ block.md
 
+      | block
+        @ block.md
 
-  | block
-    @ block.md
+    - blocks
+      # justify-content center
+      ! 450px
 
-  | block
-    @ block.md
+      | block
+        # basis 40%
+        @ block.md
+
+      | block
+        # basis 40%
+        @ block.md
