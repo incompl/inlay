@@ -69,7 +69,17 @@ module.exports = function(grunt) {
         title: 'Cool Site'
       });
 
-      html += stru(fileContent, options);
+      var layoutInfo = fileContent.match(/^&\s*use\s*(\w+\.stru)/);
+      if (layoutInfo !== null) {
+        var layoutFile = layoutInfo[1];
+        var layoutStru = fs.readFileSync(
+          path.join('content', layoutFile),
+          {encoding: 'utf8'});
+        html += stru(layoutStru, options, stru(fileContent, options));
+      }
+      else {
+        html += stru(fileContent, options);
+      }
 
       html += templates['footer.combyne'].render();
 
@@ -80,7 +90,7 @@ module.exports = function(grunt) {
 
   });
 
-  function stru(string, options) {
+  function stru(string, options, content) {
     var html = '';
     var indentSize = 2;
     var lastIndent = 0;
@@ -104,6 +114,7 @@ module.exports = function(grunt) {
       var lineOptions = lineInfo[4];
       var isInclude = lineContent.match(/^&\s*include/) !== null;
       var isCollapse = lineContent.match(/^&\s*collapse/) !== null;
+      var isContent = lineContent.match(/^&\s*content/) !== null;
 
       var thisIndent = lineIndent.length;
       var indentDiff = lastIndent - thisIndent;
@@ -153,6 +164,9 @@ module.exports = function(grunt) {
           htmlQueue = htmlQueue.replace(/class="stru/, 'class="');
         }
         html += include(lineContent, lineNum, line);
+      }
+      else if (isContent) {
+        html += '<div>' + content + '</div>';
       }
       else if (lineCommand.match(/^[@&]/) === null) {
         html += marked(lineContent);

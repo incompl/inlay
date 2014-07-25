@@ -1,0 +1,32 @@
+@ header
+
+  @ left
+    & grow 1
+
+    # Cool Site
+
+  @ right
+    & justify-content flex-end
+
+    [Sign In](http://example.com)
+
+@ headline
+  & justify-content center
+
+  @ block
+    & basis 500px
+
+    ## What you don't know about eggs is costing you $6,000,000 per year.
+
+@ content
+  & collapse 550px
+  & max-width 1100px
+  & margin auto
+
+  @ block
+    & basis 150px
+    & include sidebar.md
+
+  @ block
+    & grow 1
+    & content

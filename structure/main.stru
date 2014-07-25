@@ -1,32 +1,22 @@
-@ header
+& use layout.stru
 
-  @ left
-    & grow 1
-
-    # Cool Site
-
-  @ right
-    & justify-content flex-end
-
-    [Sign In](http://example.com)
-
-@ headline
-  & justify-content center
+@ blocks
+  & collapse 700px
 
   @ block
-    & basis 500px
-
-    ## What you don't know about eggs is costing you $6,000,000 per year.
-
-@ content
-  & collapse 550px
-  & max-width 1100px
-  & margin auto
+    Some content. Lorum ipsum is better when someone typum manularis.
 
   @ block
-    & basis 150px
-    & include sidebar.md
+    Some content. Lorum ipsum is better when someone typum manularis.
 
   @ block
-    & grow 1
-    & include content.stru
+    Some content. Lorum ipsum is better when someone typum manularis.
+
+@ blocks
+  & collapse 500px
+
+  @ block
+    Some content. Lorum ipsum is better when someone typum manularis.
+
+  @ block
+    Some content. Lorum ipsum is better when someone typum manularis.
