@@ -15,8 +15,7 @@
 
   @ block
     & basis 500px
-
-    ## What you don't know about eggs is costing you $6,000,000 per year.
+    & include headline.md
 
 @ content
   & collapse 550px
