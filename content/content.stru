@@ -1,0 +1,20 @@
+@ blocks
+  & collapse 700px
+
+  @ block
+    & include block.md
+
+  @ block
+    & include block.md
+
+  @ block
+    & include block.md
+
+@ blocks
+  & collapse 500px
+
+  @ block
+    & include block.md
+
+  @ block
+    & include block.md
