@@ -3,6 +3,11 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
 
+    clean: [
+      'artifacts',
+      'dest'
+    ],
+
     stru: {
       options: {
         src: 'content',
@@ -27,7 +32,9 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks/stru');
 
   grunt.loadNpmTasks('grunt-concat-css');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
+  grunt.registerTask('fresh', ['clean', 'default']);
   grunt.registerTask('default', ['stru', 'concat_css']);
 
 };

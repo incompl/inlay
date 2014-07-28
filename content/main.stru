@@ -1,4 +1,6 @@
-& use layout.stru
+---
+layout: layout.stru
+---
 
 @ blocks
   & collapse 700px

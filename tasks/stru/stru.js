@@ -10,6 +10,7 @@ module.exports = function(grunt) {
   var marked = require('marked');
   var combyne = require('combyne');
   var stylus = require('stylus');
+  var frontmatter = require('front-matter');
 
   var templates = {};
 
@@ -69,28 +70,26 @@ module.exports = function(grunt) {
         return;
       }
 
-      var fileContent = fs.readFileSync(filePath,
-                                       {encoding: 'utf8'});
+      var content = frontmatter(
+        fs.readFileSync(filePath, {encoding: 'utf8'}));
 
       var html = templates['header.combyne'].render({
         title: 'Cool Site'
       });
 
-      var layoutInfo = fileContent.match(/^&\s*use\s*(\w+\.stru)/);
-      if (layoutInfo !== null) {
-        var layoutFile = layoutInfo[1];
+      if (content.attributes.layout) {
         var layoutStru = fs.readFileSync(
-          path.join('structure', layoutFile),
+          path.join('structure', content.attributes.layout),
           {encoding: 'utf8'});
-        html += stru(layoutStru, options, stru(fileContent, options));
+        html += stru(layoutStru, options, stru(content.body, options));
       }
       else {
-        html += stru(fileContent, options);
+        html += stru(content.body, options);
       }
 
       html += templates['footer.combyne'].render();
 
-      var destFile = file.replace('.stru', '.html');
+      var destFile = file.replace(/\.\w+/, '.html');
       fs.writeFileSync(path.join(options.dest, destFile), html);
       grunt.log.ok(file, ' -> ', destFile);
     });

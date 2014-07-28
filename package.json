@@ -23,6 +23,8 @@
     "underscore": "~1.6.0",
     "normalize.css": "~3.0.1",
     "grunt-concat-css": "~0.3.1",
-    "mkdirp": "~0.5.0"
+    "mkdirp": "~0.5.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "front-matter": "~0.2.0"
   }
 }
