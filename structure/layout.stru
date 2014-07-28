@@ -23,7 +23,7 @@
   & margin auto
 
   @ block
-    & basis 150px
+    & basis 250px
     & include sidebar.md
 
   @ block

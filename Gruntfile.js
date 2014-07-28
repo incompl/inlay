@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
     stru: {
       options: {
-        src: 'structure',
+        src: 'content',
         dest: 'dest'
       }
     },

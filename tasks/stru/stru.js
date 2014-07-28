@@ -62,7 +62,14 @@ module.exports = function(grunt) {
 
     // Interpret our STRU files
     fs.readdirSync(options.src).forEach(function(file) {
-      var fileContent = fs.readFileSync(path.join(options.src, file),
+
+      var filePath = path.join(options.src, file);
+
+      if (fs.lstatSync(filePath).isDirectory()) {
+        return;
+      }
+
+      var fileContent = fs.readFileSync(filePath,
                                        {encoding: 'utf8'});
 
       var html = templates['header.combyne'].render({
@@ -73,7 +80,7 @@ module.exports = function(grunt) {
       if (layoutInfo !== null) {
         var layoutFile = layoutInfo[1];
         var layoutStru = fs.readFileSync(
-          path.join('content', layoutFile),
+          path.join('structure', layoutFile),
           {encoding: 'utf8'});
         html += stru(layoutStru, options, stru(fileContent, options));
       }
@@ -213,7 +220,7 @@ module.exports = function(grunt) {
     }
 
     if (extension === 'md') {
-      string = fs.readFileSync(path.join('content', file),
+      string = fs.readFileSync(path.join('content', 'partial', file),
                                      {encoding: 'utf8'});
       html = '<div>' + marked(string) + '</div>';
       included[file] = html;
