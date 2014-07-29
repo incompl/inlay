@@ -119,7 +119,6 @@ module.exports = function(grunt) {
 
       var isMarkdown = line.match(/^\s*[@&]/) === null;
       var lineContent = line.match(/^\s*(.*)/)[1];
-      console.log(lineContent);
 
       // Ignore blank lines
       if (line.match(/^\s*$/) && !inMarkdown) {
@@ -211,8 +210,9 @@ module.exports = function(grunt) {
 
       // creating a new block
       if (lineCommand === '@') {
-        htmlQueue = '<div style="" class="stru' + lineOptions + '">';
-        stack.push('row');
+        var openingTag = createOpeningTag(lineOptions);
+        htmlQueue = openingTag.tag;
+        stack.push(openingTag.element);
         startingNewBlock = true;
       }
       else if (isInclude) {
@@ -249,15 +249,7 @@ module.exports = function(grunt) {
   // On indentation decrease, close html elements
   function pop(stack, html) {
     var type = stack.pop();
-    if (type === 'row') {
-      html += '</div>';
-    }
-    else if (type === 'col') {
-      html += '</div>';
-    }
-    else {
-      grunt.fail.fatal('Unknown context: ' + type);
-    }
+    html += '</' + type + '>';
     return html;
   }
 
@@ -317,6 +309,20 @@ module.exports = function(grunt) {
     else {
       return command + ':' + arg + ';';
     }
+  }
+
+  function createOpeningTag(lineOptions) {
+    var element = lineOptions.match(/^\s*([\w-_]+)/);
+    element = element === null ? 'div' : element[1];
+    var cssClass = lineOptions.match(/\.([\w-_]+)/);
+    cssClass = cssClass === null ? 'stru' : 'stru ' + cssClass[1];
+    var id = lineOptions.match(/#([\w-_]+)/);
+    id = id === null ? '' : ' id="' + id[1] + '"';
+    return {
+      element: element,
+      tag: '<' + element + id +
+      ' style="" class="' + cssClass + '">'
+    };
   }
 
   // Print out an error message and stop execution immidiately

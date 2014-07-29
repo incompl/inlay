@@ -2,23 +2,23 @@
 layout: layout.stru
 ---
 
-@ blocks
+@ .blocks
   & collapse 700px
 
-  @ block
+  @ .block
     Some content. Lorum ipsum is better when someone typum manularis.
 
-  @ block
+  @ .block
     Some content. Lorum ipsum is better when someone typum manularis.
 
-  @ block
+  @ .block
     Some content. Lorum ipsum is better when someone typum manularis.
 
-@ blocks
+@ .blocks
   & collapse 500px
 
-  @ block
+  @ .block
     Some content. Lorum ipsum is better when someone typum manularis.
 
-  @ block
+  @ .block
     Some content. Lorum ipsum is better when someone typum manularis.

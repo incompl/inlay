@@ -1,19 +1,19 @@
 body
   color #444
 
-.header
+header
   background black
   color white
   padding 1em
-
-.headline
-  background #ddd
 
 .right
   p
     margin 0
     a
       color white
+
+#headline
+  background #ddd
 
 .block
   padding 0 1em

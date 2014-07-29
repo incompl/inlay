@@ -1,31 +1,31 @@
 @ header
 
-  @ left
+  @ .left
     & grow 1
 
     # Cool Site
 
-  @ right
+  @ .right
     & justify-content flex-end
 
     [Sign In](http://example.com)
 
-@ headline
+@ #headline
   & justify-content center
 
-  @ block
+  @ .block
     & basis 500px
     & include headline.md
 
-@ content
+@ .content
   & collapse 550px
   & max-width 1100px
   & margin auto
 
-  @ block
+  @ .block
     & basis 150px
     & include sidebar.md
 
-  @ block
+  @ .block
     & grow 1
     & content
