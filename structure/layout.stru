@@ -13,7 +13,7 @@
 @ #headline
   & justify-content center
 
-  @ .block
+  @
     & basis 500px
     & include headline.md
 

@@ -132,7 +132,7 @@ module.exports = function(grunt) {
           return;
         }
         else {
-          html += '<div>' + marked(markdownQueue) + '</div>';
+          html += '<div>' + inlineMarkdown(markdownQueue) + '</div>';
           inMarkdown = false;
         }
       }
@@ -233,7 +233,7 @@ module.exports = function(grunt) {
 
     // Write out any still-pending markdown
     if (inMarkdown) {
-      html += marked(markdownQueue);
+      html += inlineMarkdown(markdownQueue);
       inMarkdown = false;
     }
 
@@ -323,6 +323,16 @@ module.exports = function(grunt) {
       tag: '<' + element + id +
       ' style="" class="' + cssClass + '">'
     };
+  }
+
+  function inlineMarkdown(str) {
+    // if it is just one line, don't wrap with <p></p>
+    var isOneLine = str.match(/[\n\r]./) === null;
+    var html = marked(str);
+    if (isOneLine) {
+      html = html.replace(/<p>|<\/p>/g, '');
+    }
+    return html;
   }
 
   // Print out an error message and stop execution immidiately

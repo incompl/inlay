@@ -6,14 +6,11 @@ header
   color white
   padding 1em
 
-.right
-  p
-    margin 0
-    a
-      color white
+.right a
+  color white
 
 #headline
   background #ddd
 
 .block
-  padding 0 1em
+  padding 1em
