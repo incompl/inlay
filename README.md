@@ -6,17 +6,19 @@
 
 The following is a simple example of the syntax.
 
-  @ header
+```
+@ header
 
-    @ .left
-      & grow 1
+  @ .left
+    & grow 1
 
-      # Cool Site
+    # Cool Site
 
-    @ .right
-      & justify-content flex-end
+  @ .right
+    & justify-content flex-end
 
-      [Sign In](http://example.com)
+    [Sign In](http://example.com)
+```
 
 There are three types of lines here, covered in the next 3 sections.
 
