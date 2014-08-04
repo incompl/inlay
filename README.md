@@ -128,8 +128,34 @@ There is also a Property called `text` in case you want to include plain text Co
 
 ### & css {property} {value}
 
+Add the given CSS property and value to this block.
+
 ### & html
+
+Specifies that the content of this block is HTML.
 
 ### & text
 
+Specifies that the content of this block is plain text.
+
 ### & markdown
+
+Specifies that the content of this block is in Markdown format. Markdown is the default, but sometimes you may want to be explicit. It's fun.
+
+### & collapse {css width}
+
+Collapse this block if the viewport is narrower than {css width}. This is implemented using media queries. It is the primary method for creating responsive layouts.
+
+### & include {file name}
+
+Include the contents of {file name} as the content for this block. Valid file formats are:
+
+* Markdown (.md)
+* HTML (.html)
+* Text (.txt)
+
+### & content
+
+(should be renamed)
+
+If this STRU file is being used as a layout in the front matter of another document, the content of that document is put in this block.
