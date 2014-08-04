@@ -4,7 +4,7 @@ A markup format for layout.
 
 ## Introduction
 
-As you know, the separation of HTML and CSS allows you to separate your _content_ and _style_. As websites have gotten more complex, a third concern has emerged: _layout_. As things stand, the _layout_ of a page is described in both the HTML _and_ the CSS. Many CSS best-practices such as [OOCSS](https://github.com/stubbornella/oocss/wiki) deal with separating your layout and style. This helps deal with the problem but doesn't fix it.
+As you know, the separation of HTML and CSS allows you to separate your _content_ and _style_. As websites have gotten more complex, a third concern has emerged: _layout_. As things stand, the layout of a page is described in both the HTML _and_ the CSS. Many CSS best-practices such as [OOCSS](https://github.com/stubbornella/oocss/wiki) deal with separating your layout and style. This helps deal with the problem but doesn't fix it.
 
 This project is a new markup format for reusable layouts that can be used with content and styles defined elsewhere. It is intended to compliment HTML and CSS. Your HTML and CSS will be simpler because they won't be burdened with layout information. STRU plays well with Markdown; you may not need to write much HTML, if any.
 
