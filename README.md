@@ -1,3 +1,7 @@
+![](http://www.omgwiki.org/model-interchange/lib/exe/fetch.php?cache=cache&media=under-construction.gif)
+
+This project is in an experimental prototyping phase. Please don't try to use it yet. Get in touch with me on Twitter at [@_gsmith](https://twitter.com/_gsmith) if you have questions.
+
 # stru
 
 A markup format for layout.
