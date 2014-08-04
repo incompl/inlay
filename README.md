@@ -50,30 +50,40 @@ The first word after the `&` is the Property name. After that comes any argument
 
 Perhaps the most basic Property is the `css` Property. It simply allows you to apply any arbitrary css to the property. For example:
 
-  @ div
-    & css max-width 30em
+```
+@ div
+  & css max-width 30em
+```
 
 The preceding code will generate something similar to this:
 
-  &lt;div style="max-width: 30em;">...&lt;/div>
+```
+<div style="max-width: 30em;">...</div>
+```
 
 Aside: In the future, this may not be implemented as an inline style because it can cause problems with [specificity](http://css-tricks.com/specifics-on-css-specificity/).
 
 Another common Property is `include`. While `css` modifies the parent block, `include` modifies the _contents_ of the block. Specifically, `include` puts the contents of an external file into a block. If that external file is Markdown, the Markdown is compiled into HTML. For example:
 
-  @ div
-    & css max-width 30em
-    & include book.md
+```
+@ div
+  & css max-width 30em
+  & include book.md
+```
 
 Let's say the content of book.md is this line:
 
-  [Home](http://incompl.com)
+```
+[Home](http://incompl.com)
+```
 
 Then the preceding code will compile to:
 
-  &lt;div style="max-width: 30em;">
-    &lt;a href="http://incompl.com">Home&lt;/a>
-  &lt;/div>
+```
+&lt;div style="max-width: 30em;">
+  &lt;a href="http://incompl.com">Home&lt;/a>
+&lt;/div>
+```
 
 A lot of the magic comes from the many Properties that are provided. Check out the full list [here](#).
 
@@ -83,18 +93,22 @@ Any line that doesn't start with `@` or `&` is Content. By default Content is as
 
 In the previous example we used `& include book.md` but we could include that Markdown as Content instead of including it from a separate file:
 
-  @ div
-    & css max-width 30em
-    [Home](http://incompl.com)
+```
+@ div
+  & css max-width 30em
+  [Home](http://incompl.com)
+```
 
 This produces the same HTML as the previous example.
 
 If you want to include HTML you can do this:
 
-  @ div
-    & css max-width 30em
-    & html
-    &lt;a href="http://incompl.com">Home&lt;/a>
+```
+@ div
+  & css max-width 30em
+  & html
+  &lt;a href="http://incompl.com">Home&lt;/a>
+```
 
 There is also a Property called `text` in case you want to include plain text Content. This is useful to avoid the `&lt;p>` element that Markdown wraps around plain text.
 
