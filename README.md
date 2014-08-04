@@ -80,9 +80,9 @@ Let's say the content of book.md is this line:
 Then the preceding code will compile to:
 
 ```
-&lt;div style="max-width: 30em;">
-  &lt;a href="http://incompl.com">Home&lt;/a>
-&lt;/div>
+<div style="max-width: 30em;">
+  <a href="http://incompl.com">Home</a>
+</div>
 ```
 
 A lot of the magic comes from the many Properties that are provided. Check out the full list [here](#).
@@ -107,7 +107,7 @@ If you want to include HTML you can do this:
 @ div
   & css max-width 30em
   & html
-  &lt;a href="http://incompl.com">Home&lt;/a>
+  <a href="http://incompl.com">Home</a>
 ```
 
 There is also a Property called `text` in case you want to include plain text Content. This is useful to avoid the `&lt;p>` element that Markdown wraps around plain text.
