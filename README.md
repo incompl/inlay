@@ -159,3 +159,15 @@ Include the contents of {file name} as the content for this block. Valid file fo
 (should be renamed)
 
 If this STRU file is being used as a layout in the front matter of another document, the content of that document is put in this block.
+
+### & max-content-width {css width}
+
+(not implemented)
+
+Assures that the width of this block's content cannot be wider than {css width}. To do this, an additional child HTML element is created with a max-width of {css width}.
+
+### & inline-block-children
+
+(not implemented) (api unsure)
+
+Specifies that the children of this block have the CSS display type of `inline-block`. Assures that there are no whitespace-only text nodes between those children, preventing the need for [margin hacks](http://css-tricks.com/fighting-the-space-between-inline-block-elements/).
