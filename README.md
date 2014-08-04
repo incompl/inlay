@@ -48,7 +48,7 @@ Lines that start with `&` are called "properties". Properties modify the Block t
 
 The first word after the `&` is the Property name. After that comes any arguments, which vary from Property to Property.
 
-Perhaps the most basic Property is the `css` Property. It simply allows you to apply any arbitrary css to the property. For example:
+Perhaps the most basic Property is the `css` Property. It simply allows you to apply any arbitrary css to the Block. For example:
 
 ```
 @ div
