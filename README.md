@@ -52,6 +52,8 @@ Lines that start with `&` are called "properties". Properties modify the Block t
 
 The first word after the `&` is the Property name. After that comes any arguments, which vary from Property to Property.
 
+#### Properties that modify the Block
+
 Perhaps the most basic Property is the `css` Property. It simply allows you to apply any arbitrary css to the Block. For example:
 
 ```
@@ -66,6 +68,8 @@ The preceding code will generate something similar to this:
 ```
 
 Aside: In the future, this may not be implemented as an inline style because it can cause problems with [specificity](http://css-tricks.com/specifics-on-css-specificity/).
+
+#### Properties that modify the Content
 
 Another common Property is `include`. While `css` modifies the parent block, `include` modifies the _contents_ of the block. Specifically, `include` puts the contents of an external file into a block. If that external file is Markdown, the Markdown is compiled into HTML. For example:
 
