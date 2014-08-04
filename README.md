@@ -110,7 +110,7 @@ If you want to include HTML you can do this:
   <a href="http://incompl.com">Home</a>
 ```
 
-There is also a Property called `text` in case you want to include plain text Content. This is useful to avoid the `&lt;p>` element that Markdown wraps around plain text.
+There is also a Property called `text` in case you want to include plain text Content. This is useful to avoid the `<p>` element that Markdown wraps around plain text.
 
 ## Property List
 
