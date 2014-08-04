@@ -2,6 +2,8 @@
 
 ## Introduction
 
+Coming soon...
+
 ## Syntax
 
 The following is a simple example of the syntax.
