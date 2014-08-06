@@ -5,7 +5,6 @@ module.exports = function(grunt) {
   var fs = require('fs');
   var path = require('path');
   var os = require('os');
-  var _ = require('underscore');
   var mkdirp = require('mkdirp');
   var marked = require('marked');
   var combyne = require('combyne');
@@ -146,10 +145,15 @@ module.exports = function(grunt) {
       var lineCommand = lineInfo[2];
       var lineOptions = lineInfo[3];
       var isDirective = lineCommand === '&';
-      var isInclude = lineContent.match(/^&\s*include/) !== null;
-      var isCollapse = lineContent.match(/^&\s*collapse/) !== null;
-      var isContent = lineContent.match(/^&\s*content/) !== null;
-      var isStyle = isDirective && !isInclude && !isCollapse && !isContent;
+      var directiveName;
+      var directive;
+      if (isDirective) {
+        directiveName = lineOptions.split(/\s/)[1];
+        directive = directives[directiveName];
+        if (directive === undefined) {
+          error('Unknown property "' + directiveName + '"', lineNum, line);
+        }
+      }
 
       // Check indent level
       var thisIndent = lineIndent.length;
@@ -169,34 +173,11 @@ module.exports = function(grunt) {
       // things that modify the current block
 
       // CSS Style
-      if (isStyle) {
-        if (!startingNewBlock) {
-          error('Invalid context for "style"', lineNum, line);
-        }
-        htmlQueue = htmlQueue.replace(/style="([^"]*)"/,
-            function(match, p1) {
-          return 'style="' + p1 +
-                 paramStyle(lineOptions, lineNum, line) + '"';
-        });
-        return;
-      }
-
-      // CSS Collapse
-      if (isCollapse) {
-        if (!startingNewBlock) {
-          error('Invalid context for "collapse"', lineNum, line);
-        }
-        var unique = 'bp' + Math.round(Math.random() * 1000000);
-        htmlQueue = htmlQueue.replace(/<div/,
-            function(match, p1) {
-          var maxWidth = lineOptions.replace(/collapse\s*/, '');
-          return '<style>@media(max-width:' + maxWidth + ')' +
-                 '{.' + unique + ' {display: block;}}</style><div';
-        });
-        htmlQueue = htmlQueue.replace(/class="([^"]*)"/,
-            function(match, p1) {
-          return 'class="' + p1 + ' ' + unique + '"';
-        });
+      if (isDirective && directive.modifyBlock) {
+        htmlQueue = directive.modifyBlock(htmlQueue,
+                                          lineOptions,
+                                          lineNum,
+                                          line);
         return;
       }
 
@@ -215,13 +196,10 @@ module.exports = function(grunt) {
         stack.push(openingTag.element);
         startingNewBlock = true;
       }
-      else if (isInclude) {
-        if (htmlQueue !== null) {
-          htmlQueue = htmlQueue.replace(/class="stru/, 'class="');
-        }
-        html += include(lineContent, lineNum, line);
+      else if (isDirective && directive.modifyContent) {
+        html += directive.modifyContent(lineOptions, lineNum, line);
       }
-      else if (isContent) {
+      else if (isDirective && directiveName === 'content') {
         html += '<div>' + content + '</div>';
       }
       else if (isMarkdown) {
@@ -292,8 +270,8 @@ module.exports = function(grunt) {
   // Return the CSS for a style parameter
   function paramStyle(options, lineNum, line) {
     var ops = options.trim().split(/\s+/);
-    var command = ops[0];
-    var arg = ops[1];
+    var command = ops[1];
+    var arg = ops[2];
     if (command === 'grow') {
       return 'flex-grow: ' + arg + ';';
     }
@@ -339,5 +317,46 @@ module.exports = function(grunt) {
   function error(msg, lineNum, line) {
     grunt.fail.fatal(msg + ' on line ' + lineNum + ': "' + line + '"');
   }
+
+  var directives = {
+
+    'css': {
+      modifyBlock: function(html, lineOptions, lineNum, line) {
+        html = html.replace(/style="([^"]*)"/,
+            function(match, p1) {
+          return 'style="' + p1 +
+                 paramStyle(lineOptions, lineNum, line) + '"';
+        });
+        return html;
+      }
+    },
+
+    'collapse': {
+      modifyBlock: function(html, lineOptions, lineNum, line) {
+        var unique = 'bp' + Math.round(Math.random() * 1000000);
+        html = html.replace(/<div/,
+            function(match, p1) {
+          var maxWidth = lineOptions.replace(/collapse\s*/, '');
+          return '<style>@media(max-width:' + maxWidth + ')' +
+                 '{.' + unique + ' {display: block;}}</style><div';
+        });
+        html = html.replace(/class="([^"]*)"/,
+            function(match, p1) {
+          return 'class="' + p1 + ' ' + unique + '"';
+        });
+        return html;
+      }
+    },
+
+    'include': {
+      modifyContent: function(lineOptions, lineNum, line) {
+        return include(lineOptions, lineNum, line);
+      }
+    },
+
+    'content': {
+
+    }
+  };
 
 };
