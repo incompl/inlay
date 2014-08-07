@@ -1,12 +1,11 @@
 @ header
 
   @ .left
-    & css grow 1
+    & css flex-grow 1
 
     # Cool Site
 
   @ .right
-    & css justify-content flex-end
 
     [Sign In](http://example.com)
 
@@ -14,7 +13,7 @@
   & css justify-content center
 
   @
-    & css basis 500px
+    & css flex-basis 500px
     & include headline.md
 
 @ .content
@@ -23,9 +22,9 @@
   & css margin auto
 
   @ .block
-    & css basis 150px
+    & css flex-basis 150px
     & include sidebar.md
 
   @ .block
-    & css grow 1
+    & css flex-grow 1
     & content

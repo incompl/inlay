@@ -272,21 +272,7 @@ module.exports = function(grunt) {
     var ops = options.trim().split(/\s+/);
     var command = ops[1];
     var arg = ops[2];
-    if (command === 'grow') {
-      return 'flex-grow: ' + arg + ';';
-    }
-    if (command === 'shrink') {
-      return 'flex-shrink: ' + arg + ';';
-    }
-    else if (command === 'basis') {
-      return 'flex-basis: ' + arg + ';';
-    }
-    else if (command === 'direction') {
-      return 'flex-direction: ' + arg + ';';
-    }
-    else {
-      return command + ':' + arg + ';';
-    }
+    return command + ':' + arg + ';';
   }
 
   function createOpeningTag(lineOptions) {
@@ -338,7 +324,7 @@ module.exports = function(grunt) {
             function(match, p1) {
           var maxWidth = lineOptions.replace(/collapse\s*/, '');
           return '<style>@media(max-width:' + maxWidth + ')' +
-                 '{.' + unique + ' {display: block;}}</style><div';
+                 '{.' + unique + ' {display: block !important;}}</style><div';
         });
         html = html.replace(/class="([^"]*)"/,
             function(match, p1) {
