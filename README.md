@@ -124,7 +124,7 @@ If you want to include HTML you can do this:
 
 There is also a Property called `text` in case you want to include plain text Content. This is useful to avoid the `<p>` element that Markdown wraps around plain text.
 
-## Layout for other file types
+## Layout for other files
 
 You can use a stru file as the layout for a HTML or Markdown file, as well as for another stru file. You accomplish this using [Front Matter](https://github.com/jxson/front-matter).
 
