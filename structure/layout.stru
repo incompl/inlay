@@ -2,11 +2,9 @@
 
   @ .left
     & css flex-grow 1
-
     # Cool Site
 
   @ .right
-
     [Sign In](http://example.com)
 
 @ #headline

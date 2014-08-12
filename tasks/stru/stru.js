@@ -10,6 +10,9 @@ module.exports = function(grunt) {
   var combyne = require('combyne');
   var stylus = require('stylus');
   var frontmatter = require('front-matter');
+  var escape = require('escape-html');
+
+  var defaultContentType = 'markdown';
 
   var templates = {};
 
@@ -108,36 +111,37 @@ module.exports = function(grunt) {
     var lineNum = 0;
     var stack = [];
     var startingNewBlock = false;
-    var markdownQueue = null;
-    var inMarkdown = false;
+    var contentQueue = null;
+    var inContent = false;
+    var contentType = defaultContentType;
 
     var lines = string.split(os.EOL);
     lines.forEach(function(line) {
       lineNum++;
 
-      var isMarkdown = line.match(/^\s*[@&]/) === null;
+      var isContent = line.match(/^\s*[@&]/) === null;
       var lineContent = line.match(/^\s*(.*)/)[1];
 
       // Ignore blank lines
-      if (line.match(/^\s*$/) && !inMarkdown) {
+      if (line.match(/^\s*$/) && !inContent) {
         return;
       }
 
-      // If we're in a markdown block, carry on until it's done
-      if (inMarkdown) {
-        if (isMarkdown) {
-          markdownQueue += os.EOL + lineContent;
+      // If we're in a content block, carry on until it's done
+      if (inContent) {
+        if (isContent) {
+          contentQueue += os.EOL + lineContent;
           return;
         }
         else {
-          html += '<div>' + inlineMarkdown(markdownQueue) + '</div>';
-          inMarkdown = false;
+          html += contentToHtml(contentQueue, contentType);
+          inContent = false;
         }
       }
 
       // Parse line
       var lineInfo = line.match(/^(\s*)(.)(.*)$/);
-      if (lineInfo === null && !inMarkdown) {
+      if (lineInfo === null && !inContent) {
         error('Syntax error', lineNum, line);
       }
       var lineIndent = lineInfo[1];
@@ -169,15 +173,18 @@ module.exports = function(grunt) {
       }
       lastIndent = thisIndent;
 
-      // things that modify the current block
-
-      // CSS Style
+      // Directive that modifies current block
       if (isDirective && directive.modifyBlock) {
         directive.modifyBlock(stack[stack.length - 1],
                               lineOptions,
                               lineNum,
                               line);
         return;
+      }
+
+      // Directive that modifies content type
+      if (isDirective && directive.contentType) {
+        contentType = directive.contentType;
       }
 
       // We're not modifying the current block, so we can spit out
@@ -192,6 +199,7 @@ module.exports = function(grunt) {
         var element = createElement(lineOptions);
         stack.push(element);
         startingNewBlock = true;
+        contentType = defaultContentType;
       }
       else if (isDirective && directive.modifyContent) {
         html += directive.modifyContent(lineOptions, lineNum, line);
@@ -199,17 +207,17 @@ module.exports = function(grunt) {
       else if (isDirective && directiveName === 'content') {
         html += '<div>' + content + '</div>';
       }
-      else if (isMarkdown) {
-        markdownQueue = lineContent;
-        inMarkdown = true;
+      else if (isContent) {
+        contentQueue = lineContent;
+        inContent = true;
       }
 
     });
 
     // Write out any still-pending markdown
-    if (inMarkdown) {
-      html += inlineMarkdown(markdownQueue);
-      inMarkdown = false;
+    if (inContent) {
+      html += contentToHtml(contentQueue, contentType);
+      inContent = false;
     }
 
     // We're done, close any still-open html elements
@@ -287,14 +295,25 @@ module.exports = function(grunt) {
     };
   }
 
-  function inlineMarkdown(str) {
-    // if it is just one line, don't wrap with <p></p>
-    var isOneLine = str.match(/[\n\r]./) === null;
-    var html = marked(str);
-    if (isOneLine) {
-      html = html.replace(/<p>|<\/p>/g, '');
+  function contentToHtml(str, type) {
+    var isOneLine = str.match(/[\n\r]+./) === null;
+    var html;
+    if (type === 'markdown') {
+      html = marked(str);
+      if (isOneLine) {
+        html = html.replace(/<p>|<\/p>/g, '');
+      }
+      return html;
     }
-    return html;
+    else if (type === 'text') {
+      return escape(str);
+    }
+    else if (type === 'html') {
+      return str;
+    }
+    else {
+      error('Unknown content type "' + type + '"');;
+    }
   }
 
   // Print out an error message and stop execution immidiately
@@ -312,6 +331,18 @@ module.exports = function(grunt) {
                  paramStyle(lineOptions, lineNum, line) + '"';
         });
       }
+    },
+
+    'text': {
+      contentType: 'text'
+    },
+
+    'html': {
+      contentType: 'html'
+    },
+
+    'markdown': {
+      contentType: 'markdown'
     },
 
     'collapse': {
