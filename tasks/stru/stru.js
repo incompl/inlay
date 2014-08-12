@@ -107,7 +107,6 @@ module.exports = function(grunt) {
     var lastIndent = 0;
     var lineNum = 0;
     var stack = [];
-    var htmlQueue = null;
     var startingNewBlock = false;
     var markdownQueue = null;
     var inMarkdown = false;
@@ -178,22 +177,19 @@ module.exports = function(grunt) {
                               lineOptions,
                               lineNum,
                               line);
-        htmlQueue = stack[stack.length - 1].open;
         return;
       }
 
       // We're not modifying the current block, so we can spit out
       // the html to start this block
       if (startingNewBlock) {
-        html += htmlQueue;
-        htmlQueue = null;
+        html += stack[stack.length - 1].open;
         startingNewBlock = false;
       }
 
       // creating a new block
       if (lineCommand === '@') {
         var element = createElement(lineOptions);
-        htmlQueue = element.open;
         stack.push(element);
         startingNewBlock = true;
       }
