@@ -392,7 +392,7 @@ module.exports = function(grunt) {
         else if (match = param.match(/^(\d{1,2})\/(\d{1,2})$/)) {
           width = ((Number(match[1]) / Number(match[2])) * 100).toPrecision(9) + '%';
         }
-        else if (match = param.match(/^rest$/)) {
+        else if (match = param.match(/^fill$/)) {
           position = 'absolute';
         }
         else if (match = param.match(/^\d+\w+$/)) {

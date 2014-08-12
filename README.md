@@ -197,9 +197,31 @@ Include the contents of {file name} as the content for this block. Valid file fo
 * HTML (.html)
 * Text (.txt)
 
+### & col {width}
+
+Treat this block as a column. The {width} can be a CSS width but there are some stru-specific values as well. There are strict rules about what widths can be used on sibling columns. However, if you follow these rules, you can create sophisticated layouts with ease.
+
+Values for width:
+
+#### CSS Percent Width
+
+If you use a percent width such as `50%` then no sibling elements can have fixed widths.
+
+#### CSS Fixed Width
+
+If you use a fixed width such as `300px` then no sibling elements can have percent widths.
+
+#### Fill
+
+A column set to `fill` will take up all the space unused by its siblings.
+
 ### & content
 
 If this STRU file is being used as a layout in the front matter of another document, the content of that document is put in this block.
+
+### & max-width {css width}
+
+Ensures that this block doesn't become wider than {css width}. This works like the usual css `max-width` with `margin: auto;`
 
 ### & max-content-width {css width}
 
