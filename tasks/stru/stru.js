@@ -337,7 +337,6 @@ module.exports = function(grunt) {
     'max-content-width': {
       modifyBlock: function(element, lineOptions, lineNum, line) {
         var maxWidth = lineOptions.replace(/max-content-width\s*/, '');
-        console.log(lineOptions);
         element.open += '<div style="max-width:' + maxWidth +
                         ';margin:auto;">';
         element.close = '</div>' + element.close;
