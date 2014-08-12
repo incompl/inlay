@@ -179,7 +179,9 @@ Specifies that the content of this block is plain text.
 
 ### & markdown
 
-Specifies that the content of this block is in Markdown format. Markdown is the default, but sometimes you may want to be explicit. It's fun.
+Specifies that the content of this block is in Markdown format. Markdown is the default, but in the future the default may be configurable.
+
+Markdown interpretation is handled by [Marked](https://github.com/chjj/marked) with one special case: single-line Markdown content will not be wrapped by a `<p>` element.
 
 ### & collapse {css width}
 
