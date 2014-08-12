@@ -272,14 +272,6 @@ module.exports = function(grunt) {
     }
   }
 
-  // Return the CSS for a style parameter
-  function paramStyle(options, lineNum, line) {
-    var ops = options.trim().split(/\s+/);
-    var command = ops[1];
-    var arg = ops[2];
-    return command + ':' + arg + ';';
-  }
-
   function createElement(lineOptions) {
     var element = lineOptions.match(/^\s*([\w-_]+)/);
     element = element === null ? 'div' : element[1];
@@ -327,8 +319,10 @@ module.exports = function(grunt) {
       modifyBlock: function(element, lineOptions, lineNum, line) {
         element.open = element.open.replace(/style="([^"]*)"/,
             function(match, p1) {
-          return 'style="' + p1 +
-                 paramStyle(lineOptions, lineNum, line) + '"';
+          var ops = lineOptions.trim().split(/\s+/);
+          var command = ops[1];
+          var arg = ops[2];
+          return 'style="' + p1 + command + ':' + arg + ';' + '"';
         });
       }
     },
