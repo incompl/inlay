@@ -174,10 +174,11 @@ module.exports = function(grunt) {
 
       // CSS Style
       if (isDirective && directive.modifyBlock) {
-        htmlQueue = directive.modifyBlock(htmlQueue,
-                                          lineOptions,
-                                          lineNum,
-                                          line);
+        directive.modifyBlock(stack[stack.length - 1],
+                              lineOptions,
+                              lineNum,
+                              line);
+        htmlQueue = stack[stack.length - 1].open;
         return;
       }
 
@@ -191,9 +192,9 @@ module.exports = function(grunt) {
 
       // creating a new block
       if (lineCommand === '@') {
-        var openingTag = createOpeningTag(lineOptions);
-        htmlQueue = openingTag.tag;
-        stack.push(openingTag.element);
+        var element = createElement(lineOptions);
+        htmlQueue = element.open;
+        stack.push(element);
         startingNewBlock = true;
       }
       else if (isDirective && directive.modifyContent) {
@@ -226,8 +227,8 @@ module.exports = function(grunt) {
 
   // On indentation decrease, close html elements
   function pop(stack, html) {
-    var type = stack.pop();
-    html += '</' + type + '>';
+    var element = stack.pop();
+    html += element.close;
     return html;
   }
 
@@ -275,7 +276,7 @@ module.exports = function(grunt) {
     return command + ':' + arg + ';';
   }
 
-  function createOpeningTag(lineOptions) {
+  function createElement(lineOptions) {
     var element = lineOptions.match(/^\s*([\w-_]+)/);
     element = element === null ? 'div' : element[1];
     var cssClass = lineOptions.match(/\.([\w-_]+)/);
@@ -284,8 +285,9 @@ module.exports = function(grunt) {
     id = id === null ? '' : ' id="' + id[1] + '"';
     return {
       element: element,
-      tag: '<' + element + id +
-      ' style="" class="' + cssClass + '">'
+      open: '<' + element + id +
+      ' style="" class="' + cssClass + '">',
+      close: '</' + element + '>'
     };
   }
 
@@ -307,30 +309,38 @@ module.exports = function(grunt) {
   var directives = {
 
     'css': {
-      modifyBlock: function(html, lineOptions, lineNum, line) {
-        html = html.replace(/style="([^"]*)"/,
+      modifyBlock: function(element, lineOptions, lineNum, line) {
+        element.open = element.open.replace(/style="([^"]*)"/,
             function(match, p1) {
           return 'style="' + p1 +
                  paramStyle(lineOptions, lineNum, line) + '"';
         });
-        return html;
       }
     },
 
     'collapse': {
-      modifyBlock: function(html, lineOptions, lineNum, line) {
+      modifyBlock: function(element, lineOptions, lineNum, line) {
         var unique = 'bp' + Math.round(Math.random() * 1000000);
-        html = html.replace(/<div/,
+        element.open = element.open.replace(/<div/,
             function(match, p1) {
           var maxWidth = lineOptions.replace(/collapse\s*/, '');
           return '<style>@media(max-width:' + maxWidth + ')' +
                  '{.' + unique + ' {display: block !important;}}</style><div';
         });
-        html = html.replace(/class="([^"]*)"/,
+        element.open = element.open.replace(/class="([^"]*)"/,
             function(match, p1) {
           return 'class="' + p1 + ' ' + unique + '"';
         });
-        return html;
+      }
+    },
+
+    'max-content-width': {
+      modifyBlock: function(element, lineOptions, lineNum, line) {
+        var maxWidth = lineOptions.replace(/max-content-width\s*/, '');
+        console.log(lineOptions);
+        element.open += '<div style="max-width:' + maxWidth +
+                        ';margin:auto;">';
+        element.close = '</div>' + element.close;
       }
     },
 

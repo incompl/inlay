@@ -199,9 +199,7 @@ If this STRU file is being used as a layout in the front matter of another docum
 
 ### & max-content-width {css width}
 
-(not implemented)
-
-Assures that the width of this block's content cannot be wider than {css width}. To do this, an additional child HTML element is created with a max-width of {css width}.
+Assures that the width of this block's content cannot be wider than {css width}. To do this, an additional child HTML element is created with a max-width of {css width} and with `margin: auto;`
 
 ### & inline-block-children
 

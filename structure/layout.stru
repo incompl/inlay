@@ -10,11 +10,8 @@
     [Sign In](http://example.com)
 
 @ #headline
-  & css justify-content center
-
-  @
-    & css flex-basis 500px
-    & include headline.md
+  & max-content-width 500px
+  & include headline.md
 
 @ .content
   & collapse 550px
