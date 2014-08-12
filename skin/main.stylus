@@ -1,6 +1,3 @@
-.stru
-  display flex
-
 body
   color #444
 
@@ -9,8 +6,11 @@ header
   color white
   padding 1em
 
-.right a
-  color white
+.right
+  text-align right
+
+  a
+    color white
 
 #headline
   background #ddd

@@ -1,10 +1,11 @@
 @ header
 
   @ .left
-    & css flex-grow 1
+    & col 50%
     # Cool Site
 
   @ .right
+    & col 50%
     [Sign In](http://example.com)
 
 @ #headline
@@ -17,9 +18,9 @@
   & css margin auto
 
   @ .block
-    & css flex-basis 150px
+    & col 25%
     & include sidebar.md
 
   @ .block
-    & css flex-grow 1
+    & col 75%
     & content

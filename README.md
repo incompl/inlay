@@ -22,14 +22,16 @@ The following is a simple example of the syntax.
 @ header
 
   @ .left
-    & grow 1
-
+    & col 50%
     # Cool Site
 
   @ .right
-    & justify-content flex-end
-
+    & col 50%
     [Sign In](http://example.com)
+
+@ #headline
+  & max-content-width 500px
+  & include headline.md
 ```
 
 There are three types of lines here, covered in the next 3 sections.
@@ -202,9 +204,3 @@ If this STRU file is being used as a layout in the front matter of another docum
 ### & max-content-width {css width}
 
 Assures that the width of this block's content cannot be wider than {css width}. To do this, an additional child HTML element is created with a max-width of {css width} and with `margin: auto;`
-
-### & inline-block-children
-
-(not implemented) (api unsure)
-
-Specifies that the children of this block have the CSS display type of `inline-block`. Assures that there are no whitespace-only text nodes between those children, preventing the need for [margin hacks](http://css-tricks.com/fighting-the-space-between-inline-block-elements/).

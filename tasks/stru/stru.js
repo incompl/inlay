@@ -352,7 +352,10 @@ module.exports = function(grunt) {
             function(match, p1) {
           var maxWidth = lineOptions.replace(/collapse\s*/, '');
           return '<style>@media(max-width:' + maxWidth + ')' +
-                 '{.' + unique + ' {display: block !important;}}</style><div';
+                 '{.' + unique + ' > * {' +
+                  'display: block !important;' +
+                  'width: 100% !important;' +
+                 '}}</style><div';
         });
         element.open = element.open.replace(/class="([^"]*)"/,
             function(match, p1) {
@@ -367,6 +370,35 @@ module.exports = function(grunt) {
         element.open += '<div style="max-width:' + maxWidth +
                         ';margin:auto;">';
         element.close = '</div>' + element.close;
+      }
+    },
+
+    'col': {
+      modifyBlock: function(element, lineOptions, lineNum, line) {
+        var param = lineOptions.replace(/col\s*/, '').trim();
+        var width;
+        var match;
+        if (param.match(/^\d{1,2}%$/)) {
+          width = param;
+        }
+        else if (match = param.match(/^(\d{1,2})\/(\d{1,2})$/)) {
+          width = ((Number(match[1]) / Number(match[2])) * 100).toPrecision(9) + '%';
+        }
+        else {
+          error('Unknown col parameter "' + param + '"', lineNum, line);
+        }
+        element.open = element.open.replace(/style="([^"]*)"/,
+            function(match, p1) {
+          var result =
+            'style="' + p1 +
+            'display:inline-block;' +
+            'vertical-align:top;';
+          if (width !== undefined) {
+            result += 'width:' + width + ';';
+          }
+          result += '"';
+          return result;
+        });
       }
     },
 
