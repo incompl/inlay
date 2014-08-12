@@ -367,16 +367,36 @@ module.exports = function(grunt) {
       }
     },
 
+    'max-width': {
+      modifyBlock: function(element, lineOptions, lineNum, line) {
+        var maxWidth = lineOptions.replace(/max-width\s*/, '');
+        element.open = element.open.replace(/style="([^"]*)"/,
+            function(match, p1) {
+          var result =
+            'style="' + p1 +
+            'max-width:' + maxWidth + ';"';
+          return result;
+        });
+      }
+    },
+
     'col': {
       modifyBlock: function(element, lineOptions, lineNum, line) {
         var param = lineOptions.replace(/col\s*/, '').trim();
         var width;
+        var position;
         var match;
         if (param.match(/^\d{1,2}%$/)) {
           width = param;
         }
         else if (match = param.match(/^(\d{1,2})\/(\d{1,2})$/)) {
           width = ((Number(match[1]) / Number(match[2])) * 100).toPrecision(9) + '%';
+        }
+        else if (match = param.match(/^rest$/)) {
+          position = 'absolute';
+        }
+        else if (match = param.match(/^\d+\w+$/)) {
+          width = param;
         }
         else {
           error('Unknown col parameter "' + param + '"', lineNum, line);
@@ -389,6 +409,9 @@ module.exports = function(grunt) {
             'vertical-align:top;';
           if (width !== undefined) {
             result += 'width:' + width + ';';
+          }
+          if (position !== undefined) {
+            result += 'position:' + position + ';';
           }
           result += '"';
           return result;

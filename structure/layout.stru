@@ -14,13 +14,12 @@
 
 @ .content
   & collapse 550px
-  & css max-width 1100px
-  & css margin auto
+  & max-width 900px
 
   @ .block
-    & col 25%
+    & col 150px
     & include sidebar.md
 
   @ .block
-    & col 75%
+    & col rest
     & content
