@@ -203,15 +203,15 @@ Treat this block as a column. The {width} can be a CSS width but there are some 
 
 Values for width:
 
-*CSS Percent Width*
+**CSS Percent Width**
 
 If you use a percent width such as `50%` then no sibling elements can have fixed widths.
 
-*CSS Fixed Width*
+**CSS Fixed Width**
 
 If you use a fixed width such as `300px` then no sibling elements can have percent widths.
 
-*Fill*
+**Fill**
 
 A column set to `fill` will take up all the space unused by its siblings.
 
