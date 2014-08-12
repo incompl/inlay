@@ -213,7 +213,7 @@ If you use a fixed width such as `300px` then no sibling elements can have perce
 
 **Fill**
 
-A column set to `fill` will take up all the space unused by its siblings.
+This is where the magic happens. A column set to `fill` will take up all the space unused by its siblings. There can only be one `fill` column in a row. It's similar to [flex-grow](https://developer.mozilla.org/en-US/docs/Web/CSS/flex-grow) but does require the browser to have flexbox support.
 
 ### & content
 
