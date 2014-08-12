@@ -195,8 +195,6 @@ Include the contents of {file name} as the content for this block. Valid file fo
 
 ### & content
 
-(should be renamed)
-
 If this STRU file is being used as a layout in the front matter of another document, the content of that document is put in this block.
 
 ### & max-content-width {css width}
