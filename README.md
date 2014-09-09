@@ -2,7 +2,7 @@
 
 This project is in an experimental prototyping phase. Please don't try to use it yet. Get in touch with me on Twitter at [@_gsmith](https://twitter.com/_gsmith) if you have questions.
 
-# stru
+# Inlay
 
 A markup format for layout.
 
@@ -12,7 +12,7 @@ The separation of HTML and CSS allows you to separate your _content_ and _style_
 
 A related issue is that there is no convenient way to author website layouts. [Attempts at WYSIWYG editors have floundered since at least 1997](http://en.wikipedia.org/wiki/Microsoft_FrontPage). Meanwhile, [Markdown](http://en.wikipedia.org/wiki/Markdown) has shown us that a light markup format can be more palatable than WYSIWYG. Why not do for layout what Markdown has done for text formatting?
 
-This project is a new markup format for reusable layouts that can be used with content and styles defined elsewhere. It is intended to compliment HTML and CSS. Your HTML and CSS will be simpler and more maintainable because they won't be burdened with layout information. STRU plays well with Markdown; in fact, you may not need to write any HTML at all.
+This project is a new markup format for reusable layouts that can be used with content and styles defined elsewhere. It is intended to compliment HTML and CSS. Your HTML and CSS will be simpler and more maintainable because they won't be burdened with layout information. Inlay plays well with Markdown; in fact, you may not need to write any HTML at all.
 
 ## Syntax
 
@@ -130,19 +130,19 @@ There is also a Property called `text` in case you want to include plain text Co
 
 ## Layout for other files
 
-You can use a stru file as the layout for a HTML or Markdown file, as well as for another stru file. You accomplish this using [Front Matter](https://github.com/jxson/front-matter).
+You can use an Inlay file as the layout for a HTML or Markdown file, as well as for another Inlay file. You accomplish this using [Front Matter](https://github.com/jxson/front-matter).
 
 For example, consider this Markdown file, `article.md`:
 
 ```
 ---
-layout: layout.stru
+layout: layout.inlay
 ---
 
 ## Section Title
 ```
 
-You see the Front Matter refers to `layout.stru`, the content of which is this:
+You see the Front Matter refers to `layout.inlay`, the content of which is this:
 
 ```
 @ header
@@ -152,7 +152,7 @@ You see the Front Matter refers to `layout.stru`, the content of which is this:
   & content
 ```
 
-The line `& content` is a property that is special for stru files that are referenced by the Front Matter of another file. The content from `article.md` will be inserted as the content of that Block. The output will look like this:
+The line `& content` is a property that is special for Inlay files that are referenced by the Front Matter of another file. The content from `article.md` will be inserted as the content of that Block. The output will look like this:
 
 ```
 ...
@@ -199,7 +199,7 @@ Include the contents of {file name} as the content for this block. Valid file fo
 
 ### & col {width}
 
-Treat this block as a column. The {width} can be a CSS width but there are some stru-specific values as well. There are strict rules about what widths can be used on sibling columns. However, if you follow these rules, you can create sophisticated layouts with ease.
+Treat this block as a column. The {width} can be a CSS width but there are some Inlay-specific values as well. There are strict rules about what widths can be used on sibling columns. However, if you follow these rules, you can create sophisticated layouts with ease.
 
 Values for width:
 
@@ -217,7 +217,7 @@ This is where the magic happens. A column set to `fill` will take up all the spa
 
 ### & content
 
-If this STRU file is being used as a layout in the front matter of another document, the content of that document is put in this block.
+If this Inlay file is being used as a layout in the front matter of another document, the content of that document is put in this block.
 
 ### & max-width {css width}
 

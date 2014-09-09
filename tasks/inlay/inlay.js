@@ -16,14 +16,14 @@ module.exports = function(grunt) {
 
   var templates = {};
 
-  var templatesPath = path.join('tasks', 'stru', 'html');
+  var templatesPath = path.join('tasks', 'inlay', 'html');
   fs.readdirSync(templatesPath).forEach(function(file) {
     var templ = fs.readFileSync(path.join(templatesPath, file),
                                 {encoding: 'utf8'});
     templates[file] = combyne(templ);
   });
 
-  grunt.registerTask('stru', 'ineffable', function() {
+  grunt.registerTask('inlay', 'ineffable', function() {
 
     // Default options
     var options = this.options({
@@ -32,10 +32,10 @@ module.exports = function(grunt) {
 
     // Check options
     if (options.src === undefined) {
-      grunt.fail.fatal('No stru src');
+      grunt.fail.fatal('No Inlay src');
     }
     if (options.dest === undefined) {
-      grunt.fail.fatal('No stru dest');
+      grunt.fail.fatal('No Inlay dest');
     }
 
     // Create needed directories
@@ -44,10 +44,10 @@ module.exports = function(grunt) {
 
     // Compile our stylus
     var styl = fs.readFileSync(
-      path.join('tasks', 'stru', 'css', 'stru.stylus'),
+      path.join('tasks', 'Inlay', 'css', 'inlay.stylus'),
       {encoding: 'utf8'});
     var css = stylus(styl).render();
-    fs.writeFileSync(path.join('artifacts', 'css', 'stru.css'), css);
+    fs.writeFileSync(path.join('artifacts', 'css', 'inlay.css'), css);
 
     // Compile user stylus
     styl = fs.readFileSync(
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
         path.join('node_modules', 'normalize.css', 'normalize.css'))
     );
 
-    // Interpret our STRU files
+    // Interpret our Inlay files
     fs.readdirSync(options.src).forEach(function(file) {
 
       var filePath = path.join(options.src, file);
@@ -82,15 +82,15 @@ module.exports = function(grunt) {
 
       // Use a layout
       if (content.attributes.layout) {
-        var layoutStru = fs.readFileSync(
+        var layoutInlay = fs.readFileSync(
           path.join('structure', content.attributes.layout),
           {encoding: 'utf8'});
-        html += stru(layoutStru, options, stru(content.body, options));
+        html += inlay(layoutInlay, options, inlay(content.body, options));
       }
 
       // No layout
       else {
-        html += stru(content.body, options);
+        html += inlay(content.body, options);
       }
 
       // Footer
@@ -104,7 +104,7 @@ module.exports = function(grunt) {
 
   });
 
-  function stru(string, options, content) {
+  function inlay(string, options, content) {
     var html = '';
     var indentSize = 2;
     var lastIndent = 0;
@@ -260,10 +260,10 @@ module.exports = function(grunt) {
       included[file] = html;
       return html;
     }
-    else if (extension === 'stru') {
+    else if (extension === 'inlay') {
       string = fs.readFileSync(path.join('content', file),
                                    {encoding: 'utf8'});
-      html = '<div>' + stru(string) + '</div>';
+      html = '<div>' + inlay(string) + '</div>';
       included[file] = html;
       return html;
     }
@@ -276,7 +276,7 @@ module.exports = function(grunt) {
     var element = lineOptions.match(/^\s*([\w-_]+)/);
     element = element === null ? 'div' : element[1];
     var cssClass = lineOptions.match(/\.([\w-_]+)/);
-    cssClass = cssClass === null ? 'stru' : 'stru ' + cssClass[1];
+    cssClass = cssClass === null ? 'inlay' : 'inlay ' + cssClass[1];
     var id = lineOptions.match(/#([\w-_]+)/);
     id = id === null ? '' : ' id="' + id[1] + '"';
     return {

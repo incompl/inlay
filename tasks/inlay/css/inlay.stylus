@@ -3,11 +3,11 @@
   -moz-box-sizing border-box
   box-sizing border-box
 
-.stru
+.inlay
   margin auto
   position relative
-.stru:before,.stru:after 
+.inlay:before,.inlay:after 
   content " "
   display table
-.stru:after
+.inlay:after
   clear both

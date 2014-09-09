@@ -1,5 +1,5 @@
 {
-  "name": "stru",
+  "name": "inlay",
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/incompl/stru.git"
+    "url": "https://github.com/incompl/inlay.git"
   },
   "author": "Greg Smith",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/incompl/stru/issues"
+    "url": "https://github.com/incompl/inlay/issues"
   },
   "devDependencies": {
     "grunt": "~0.4.5",

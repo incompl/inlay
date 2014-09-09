@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       'dest'
     ],
 
-    stru: {
+    inlay: {
       options: {
         src: 'content',
         dest: 'dest'
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       all: {
         src: [
           'artifacts/css/normalize.css',
-          'artifacts/css/stru.css',
+          'artifacts/css/inlay.css',
           'artifacts/css/main.css'
         ],
         dest: 'dest/style.css'
@@ -29,12 +29,12 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.loadTasks('tasks/stru');
+  grunt.loadTasks('tasks/inlay');
 
   grunt.loadNpmTasks('grunt-concat-css');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.registerTask('fresh', ['clean', 'default']);
-  grunt.registerTask('default', ['stru', 'concat_css']);
+  grunt.registerTask('default', ['inlay', 'concat_css']);
 
 };
